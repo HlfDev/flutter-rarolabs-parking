@@ -13,12 +13,15 @@ class EmptyParking extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Image.asset('assets/images/empty_parking.png'),
-          Text(
-            'Clique no botão "Novo Estacionamento" para Cadastrar seus Estacionamentos.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: (18),
+          Expanded(child: Image.asset('assets/images/empty_parking.png')),
+          Expanded(
+            flex: 2,
+            child: Text(
+              'Clique no botão "Novo Estacionamento" para Cadastrar seus Estacionamentos.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: (20),
+              ),
             ),
           )
         ],
