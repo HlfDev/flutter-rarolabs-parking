@@ -1,46 +1,46 @@
 import 'dart:convert';
 
-class ParkingModel {
+class ParkingLotModel {
   final String id;
-  final String parkingName;
-  final String valuePerHourSmallVeicles;
-  final String valuePerHourMediumVeicles;
-  final String valuePerHourBigVeicles;
-  final String parkingLots;
+  final String model;
+  final String plate;
+  final String lotCode;
+  final String entryDate;
+  final String departureDate;
 
-  const ParkingModel({
+  const ParkingLotModel({
     required this.id,
-    required this.parkingName,
-    required this.valuePerHourSmallVeicles,
-    required this.valuePerHourMediumVeicles,
-    required this.valuePerHourBigVeicles,
-    required this.parkingLots,
+    required this.model,
+    required this.plate,
+    required this.lotCode,
+    required this.entryDate,
+    required this.departureDate,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'parkingName': parkingName,
-      'valuePerHourSmallVeicles': valuePerHourSmallVeicles,
-      'valuePerHourMediumVeicles': valuePerHourMediumVeicles,
-      'valuePerHourBigVeicles': valuePerHourBigVeicles,
-      'parkingLots': parkingLots,
+      'model': model,
+      'plate': plate,
+      'lotCode': lotCode,
+      'entryDate': entryDate,
+      'departureDate': departureDate,
     };
   }
 
-  factory ParkingModel.fromMap(Map<String, dynamic> map) {
-    return ParkingModel(
+  factory ParkingLotModel.fromMap(Map<String, dynamic> map) {
+    return ParkingLotModel(
       id: map['id'],
-      parkingName: map['parkingName'],
-      valuePerHourSmallVeicles: map['valuePerHourSmallVeicles'],
-      valuePerHourMediumVeicles: map['valuePerHourMediumVeicles'],
-      valuePerHourBigVeicles: map['valuePerHourBigVeicles'],
-      parkingLots: map['parkingLots'],
+      model: map['model'],
+      plate: map['plate'],
+      lotCode: map['lotCode'],
+      entryDate: map['entryDate'],
+      departureDate: map['departureDate'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ParkingModel.fromJson(String source) =>
-      ParkingModel.fromMap(json.decode(source));
+  factory ParkingLotModel.fromJson(String source) =>
+      ParkingLotModel.fromMap(json.decode(source));
 }

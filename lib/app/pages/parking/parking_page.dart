@@ -35,13 +35,14 @@ class ParkingPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushNamed(
                       AppRoutes.PARKING_FORM,
-                      arguments: ParkingModel(
-                          id: '',
-                          parkingLots: '',
-                          parkingName: '',
-                          valuePerHourBigVeicles: '',
-                          valuePerHourMediumVeicles: '',
-                          valuePerHourSmallVeicles: ''),
+                      arguments: ParkingLotModel(
+                        id: '',
+                        departureDate: '',
+                        entryDate: '',
+                        lotCode: '',
+                        model: '',
+                        plate: '',
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(

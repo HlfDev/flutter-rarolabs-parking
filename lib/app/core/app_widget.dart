@@ -20,14 +20,12 @@ class AppWidget extends StatelessWidget {
           theme: ThemeData(
             brightness: Brightness.light,
             primaryColor: Colors.grey[900],
-            accentColor: Colors.grey[900],
-            primarySwatch: Colors.amber,
-            scaffoldBackgroundColor: Colors.white,
+            accentColor: Colors.orange,
+            primarySwatch: Colors.orange,
           ),
           title: "Controle Estacionamento",
           routes: {
             AppRoutes.HOME: (_) => HomePage(),
-            AppRoutes.PARKING_FORM: (_) => ParkingFormPage(),
             AppRoutes.PARKING_LOT: (_) => ParkingLotPage(),
           }),
     );
