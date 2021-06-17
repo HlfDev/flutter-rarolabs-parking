@@ -29,7 +29,7 @@ class EntryDetailPage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Provider.of<ParkingProvider>(context, listen: false)
-                            .remove(parkingModel);
+                            .remove(parkingModel.id);
                         Navigator.of(context).pop(false);
                       },
                       style: ElevatedButton.styleFrom(
@@ -64,7 +64,7 @@ class EntryDetailPage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Provider.of<ParkingProvider>(context, listen: false)
-                            .remove(parkingModel);
+                            .remove(parkingModel.id);
                         Navigator.of(context).pop(false);
                       },
                       style: ElevatedButton.styleFrom(
