@@ -1,6 +1,12 @@
 import 'dart:convert';
 
 class LotModel {
+
+  static String _id = 'id';
+  static String _lotCode = 'lotCode';
+  static String _emptySpace = 'emptySpace';
+
+
   final String id;
   final String lotCode;
   final bool emptySpace;
@@ -13,17 +19,17 @@ class LotModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'lotCode': lotCode,
-      'emptySpace': emptySpace,
+      _id: id,
+      _lotCode: lotCode,
+      _emptySpace: emptySpace,
     };
   }
 
   factory LotModel.fromMap(Map<String, dynamic> map) {
     return LotModel(
-      id: map['id'],
-      lotCode: map['lotCode'],
-      emptySpace: map['lotCode'],
+      id: map[_id],
+      lotCode: map[_lotCode],
+      emptySpace: map[_emptySpace],
     );
   }
 

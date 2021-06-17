@@ -1,6 +1,15 @@
 import 'dart:convert';
 
 class ParkingLotModel {
+
+  static String _id = 'id';
+  static String _model = 'model';
+  static String _plate = 'plate';
+  static String _lotCode = 'lotCode';
+  static String _entryDate = 'entryDate';
+  static String _departureDate = 'departureDate';
+
+
   final String id;
   final String model;
   final String plate;
@@ -19,36 +28,29 @@ class ParkingLotModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'model': model,
-      'plate': plate,
-      'lotCode': lotCode,
-      'entryDate': entryDate,
-      'departureDate': departureDate,
+      _id : id,
+      _model: model,
+      _plate: plate,
+      _lotCode: lotCode,
+      _entryDate: entryDate,
+      _departureDate: departureDate,
     };
   }
 
   factory ParkingLotModel.fromMap(Map<String, dynamic> map) {
     return ParkingLotModel(
-      id: map['id'],
-      model: map['model'],
-      plate: map['plate'],
-      lotCode: map['lotCode'],
-      entryDate: map['entryDate'],
-      departureDate: map['departureDate'],
+      id: map[_id],
+      model: map[_model],
+      plate: map[_plate],
+      lotCode: map[_lotCode],
+      entryDate: map[_entryDate],
+      departureDate: map[_departureDate],
     );
   }
+
 
   String toJson() => json.encode(toMap());
 
-  factory ParkingLotModel.fromJson(Map<String, dynamic> json) {
-    return ParkingLotModel(
-      id: json['id'],
-      model: json['model'],
-      plate: json['plate'],
-      lotCode: json['lotCode'],
-      entryDate: json['entryDate'],
-      departureDate: json['departureDate'],
-    );
-  }
+  factory ParkingLotModel.fromJson(String source) =>
+      ParkingLotModel.fromMap(json.decode(source));
 }

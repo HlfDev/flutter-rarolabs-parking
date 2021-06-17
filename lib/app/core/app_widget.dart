@@ -11,6 +11,7 @@ import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 class AppWidget extends StatelessWidget {
   static String _title = 'Controle Estacionamento';
 
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

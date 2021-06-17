@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:raro_parking_challenge/app/pages/entry/entry_page.dart';
 
 import 'package:raro_parking_challenge/app/pages/lot/lot_page.dart';
+import 'package:raro_parking_challenge/app/provider/lot_provider.dart';
 import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,9 +29,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    final getInitData = Provider.of<ParkingProvider>(context, listen: false);
+    
+    Provider.of<ParkingProvider>(context, listen: false).fetch();
+    Provider.of<LotProvider>(context, listen: false).fetch();
 
-    getInitData.fetch();
   }
 
   @override

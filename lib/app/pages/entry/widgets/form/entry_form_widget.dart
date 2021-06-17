@@ -11,6 +11,21 @@ class EntryFormWidget extends StatefulWidget {
 }
 
 class _EntryFormWidgetState extends State<EntryFormWidget> {
+
+  static String _id = 'id';
+  static String _model = 'model';
+  static String _plate = 'plate';
+  static String _lotCode = 'lotCode';
+  static String _entryDate = 'entryDate';
+  static String _departureDate = 'departureDate';
+
+  static String _validatorModel = 'Preencha o Modelo';
+  static String _validatorPlate = 'Preencha a Placa';
+  static String _validatorLotCode = 'Selecione uma Vaga';
+
+  static String _emptyText = '';
+
+
   final Map<String, dynamic> _formData = {};
   final _formKey = GlobalKey<FormState>();
 
@@ -18,25 +33,25 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
   final _controllerPlate = TextEditingController();
   final _controllerLotCode = TextEditingController();
   final _controllerValuePerHour = TextEditingController();
-
+  
   void _loadFormData(ParkingLotModel parkingModel) {
-    _formData['id'] = parkingModel.id;
-    _formData['model'] = parkingModel.model;
-    _formData['plate'] = parkingModel.plate;
-    _formData['lotCode'] = parkingModel.lotCode;
-    _formData['entryDate'] = parkingModel.entryDate;
-    _formData['departureDate'] = parkingModel.departureDate;
+    _formData[_id] = parkingModel.id;
+    _formData[_model] = parkingModel.model;
+    _formData[_plate] = parkingModel.plate;
+    _formData[_lotCode] = parkingModel.lotCode;
+    _formData[_entryDate] = parkingModel.entryDate;
+    _formData[_departureDate] = parkingModel.departureDate;
   }
 
   @override
   Widget build(BuildContext context) {
     final ParkingLotModel parkingModel = ParkingLotModel(
-      departureDate: '',
-      entryDate: '',
-      id: '',
-      lotCode: '',
-      model: '',
-      plate: '',
+      departureDate: _emptyText,
+      entryDate: _emptyText,
+      id: _emptyText,
+      lotCode: _emptyText,
+      model: _emptyText,
+      plate: _emptyText,
     );
 
     _loadFormData(parkingModel);
@@ -58,7 +73,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                       controller: _controllerModel,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Preencha o Modelo';
+                          return _validatorModel;
                         }
                         return null;
                       },
@@ -86,7 +101,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                       controller: _controllerLotCode,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Preencha a Vaga';
+                          return _validatorLotCode;
                         }
                         return null;
                       },
@@ -111,7 +126,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                       controller: _controllerPlate,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Preencha a placa';
+                          return _validatorPlate;
                         }
                         return null;
                       },
@@ -145,19 +160,19 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                           Provider.of<ParkingProvider>(context, listen: false)
                               .put(
                             ParkingLotModel(
-                              id: _formData['id'] ?? '',
-                              departureDate: '',
+                              id: _formData[_id] ?? _emptyText,
+                              departureDate: _emptyText,
                               entryDate: '${DateTime.now()}',
-                              lotCode: _formData['lotCode'] ?? '',
-                              model: _formData['model'] ?? '',
-                              plate: _formData['plate'] ?? '',
+                              lotCode: _formData[_lotCode] ?? _emptyText,
+                              model: _formData[_model] ?? _emptyText,
+                              plate: _formData[_plate] ?? _emptyText,
                             ),
                           );
 
-                          _controllerModel.text = '';
-                          _controllerPlate.text = '';
-                          _controllerLotCode.text = '';
-                          _controllerValuePerHour.text = '';
+                          _controllerModel.text = _emptyText;
+                          _controllerPlate.text = _emptyText;
+                          _controllerLotCode.text = _emptyText;
+                          _controllerValuePerHour.text = _emptyText;
                         }
                       },
                       style: ElevatedButton.styleFrom(

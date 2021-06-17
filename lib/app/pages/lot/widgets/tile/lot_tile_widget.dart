@@ -32,7 +32,7 @@ class LotTileWidget extends StatelessWidget {
                 ? TextButton.icon(
                     onPressed: () {
                       Provider.of<LotProvider>(context, listen: false)
-                          .remove(lotModel);
+                          .remove(lotModel.id);
                     },
                     icon: Icon(Icons.delete, color: Colors.white),
                     label: Text(
@@ -50,4 +50,7 @@ class LotTileWidget extends StatelessWidget {
       ],
     );
   }
+
+
+  
 }
