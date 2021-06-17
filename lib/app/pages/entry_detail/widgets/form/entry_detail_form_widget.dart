@@ -1,26 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:raro_parking_challenge/app/shared/models/parking_model.dart';
-import 'package:raro_parking_challenge/app/shared/widgets/button/elevated_button_rounded.dart';
 
-class FormHomePage2Widget extends StatefulWidget {
-  const FormHomePage2Widget({Key? key}) : super(key: key);
+class EntryDetailFormWidget extends StatefulWidget {
+  const EntryDetailFormWidget({Key? key}) : super(key: key);
 
   @override
-  _FormHomePage2WidgetState createState() => _FormHomePage2WidgetState();
+  _EntryDetailFormWidgetState createState() => _EntryDetailFormWidgetState();
 }
 
-class _FormHomePage2WidgetState extends State<FormHomePage2Widget> {
-  final Map<String, dynamic> _formData = {};
-
-  void _loadFormData(ParkingLotModel parkingModel) {
-    _formData['id'] = parkingModel.id;
-    _formData['model'] = parkingModel.model;
-    _formData['plate'] = parkingModel.plate;
-    _formData['lotCode'] = parkingModel.lotCode;
-    _formData['entryDate'] = parkingModel.entryDate;
-    _formData['departureDate'] = parkingModel.departureDate;
-  }
-
+class _EntryDetailFormWidgetState extends State<EntryDetailFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(

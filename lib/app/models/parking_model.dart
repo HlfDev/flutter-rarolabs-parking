@@ -41,6 +41,14 @@ class ParkingLotModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ParkingLotModel.fromJson(String source) =>
-      ParkingLotModel.fromMap(json.decode(source));
+  factory ParkingLotModel.fromJson(Map<String, dynamic> json) {
+    return ParkingLotModel(
+      id: json['id'],
+      model: json['model'],
+      plate: json['plate'],
+      lotCode: json['lotCode'],
+      entryDate: json['entryDate'],
+      departureDate: json['departureDate'],
+    );
+  }
 }

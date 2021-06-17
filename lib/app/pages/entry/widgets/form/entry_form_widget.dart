@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:raro_parking_challenge/app/shared/models/parking_model.dart';
-import 'package:raro_parking_challenge/app/shared/provider/parking_provider.dart';
+import 'package:raro_parking_challenge/app/models/parking_model.dart';
+import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 
-class FormHomePage3Widget extends StatefulWidget {
-  const FormHomePage3Widget({Key? key}) : super(key: key);
+class EntryFormWidget extends StatefulWidget {
+  const EntryFormWidget({Key? key}) : super(key: key);
 
   @override
-  _FormHomePage3WidgetState createState() => _FormHomePage3WidgetState();
+  _EntryFormWidgetState createState() => _EntryFormWidgetState();
 }
 
-class _FormHomePage3WidgetState extends State<FormHomePage3Widget> {
+class _EntryFormWidgetState extends State<EntryFormWidget> {
   final Map<String, dynamic> _formData = {};
   final _formKey = GlobalKey<FormState>();
 
@@ -58,7 +58,7 @@ class _FormHomePage3WidgetState extends State<FormHomePage3Widget> {
                       controller: _controllerModel,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Preencha o Código da Vaga';
+                          return 'Preencha o Modelo';
                         }
                         return null;
                       },
@@ -66,8 +66,61 @@ class _FormHomePage3WidgetState extends State<FormHomePage3Widget> {
                       keyboardType: TextInputType.number,
                       cursorColor: Colors.black,
                       decoration: const InputDecoration(
+                        icon: Icon(Icons.local_shipping),
+                        labelText: 'Modelo/Descrição',
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _controllerLotCode,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Preencha a Vaga';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _formData['lotCode'] = value ?? '',
+                      keyboardType: TextInputType.number,
+                      cursorColor: Colors.black,
+                      decoration: const InputDecoration(
                         icon: Icon(Icons.tag),
                         labelText: 'Código da Vaga',
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8.0),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _controllerPlate,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Preencha a placa';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _formData['plate'] = value ?? '',
+                      keyboardType: TextInputType.number,
+                      cursorColor: Colors.black,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.subtitles),
+                        labelText: 'Placa',
                         labelStyle: TextStyle(
                           color: Colors.black,
                         ),
@@ -118,14 +171,14 @@ class _FormHomePage3WidgetState extends State<FormHomePage3Widget> {
                             fontWeight: FontWeight.bold,
                           )),
                       label: Text(
-                        'Cadastrar Vaga',
+                        'Realizar Entrada',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                         ),
                       ),
                       icon: Icon(
-                        Icons.local_parking,
+                        Icons.garage,
                         color: Colors.white,
                         size: 32,
                       ),

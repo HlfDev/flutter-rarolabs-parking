@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:raro_parking_challenge/app/pages/home/widgets/form/form_homepage2_widget.dart';
-import 'package:raro_parking_challenge/app/pages/home/widgets/form/form_homepage_widget.dart';
+import 'package:raro_parking_challenge/app/models/parking_model.dart';
+import 'package:raro_parking_challenge/app/pages/entry_detail/widgets/form/entry_detail_form_widget.dart';
+import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 
-import 'package:raro_parking_challenge/app/shared/models/parking_model.dart';
-import 'package:raro_parking_challenge/app/shared/provider/parking_provider.dart';
-
-class ParkingLotPage extends StatelessWidget {
-  const ParkingLotPage({Key? key}) : super(key: key);
+class EntryDetailPage extends StatelessWidget {
+  const EntryDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class ParkingLotPage extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  FormHomePage2Widget(),
+                  EntryDetailFormWidget(),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24.0, vertical: 4.0),

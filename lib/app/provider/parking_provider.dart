@@ -2,18 +2,36 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:raro_parking_challenge/app/shared/models/parking_model.dart';
-import 'package:raro_parking_challenge/app/utils/data/dummy_parkings.dart';
+import 'package:raro_parking_challenge/app/models/parking_model.dart';
 
 class ParkingProvider with ChangeNotifier {
   static const _baseUrl =
       "https://flutter-parking-challenge-default-rtdb.firebaseio.com/";
 
-  Map<String, ParkingLotModel> _items = {...DUMMY_PARKINGS};
+  Map<String, ParkingLotModel> _items = {};
+  List<ParkingLotModel> _listItems = [];
+
+  Future<void> fetch() async {
+    final response = await http.get(
+      Uri.parse("$_baseUrl/parkings.json"),
+    );
+    Map<String, dynamic> data = jsonDecode(response.body);
+
+    data.forEach((id, data) {
+      _listItems.add(ParkingLotModel(
+        id: id,
+        departureDate: data['departureDate'],
+        entryDate: data['entryDate'],
+        lotCode: data['lotCode'],
+        model: data['model'],
+        plate: data['plate'],
+      ));
+    });
+    notifyListeners();
+  }
 
   List<ParkingLotModel> get all {
-    return [..._items.values];
+    return [..._listItems];
   }
 
   int get count {

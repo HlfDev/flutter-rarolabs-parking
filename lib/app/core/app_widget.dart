@@ -1,33 +1,35 @@
+// ignore: prefer_double_quotes
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raro_parking_challenge/app/core/core.dart';
+import 'package:raro_parking_challenge/app/pages/entry_detail/entry_detail_page.dart';
 import 'package:raro_parking_challenge/app/pages/home/home_page.dart';
-import 'package:raro_parking_challenge/app/pages/parking_form/parking_form_page.dart';
 
-import 'package:raro_parking_challenge/app/core/app_routes.dart';
-import 'package:raro_parking_challenge/app/pages/parking_lots/parking_lot_page.dart';
-import 'package:raro_parking_challenge/app/shared/provider/parking_provider.dart';
+import 'package:raro_parking_challenge/app/provider/lot_provider.dart';
+import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 
 class AppWidget extends StatelessWidget {
+  static String _title = 'Controle Estacionamento';
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => ParkingProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LotProvider(),
+        ),
       ],
       child: MaterialApp(
-          theme: ThemeData(
-            brightness: Brightness.light,
-            primaryColor: Colors.grey[900],
-            accentColor: Colors.orange,
-            primarySwatch: Colors.orange,
-          ),
-          title: "Controle Estacionamento",
-          routes: {
-            AppRoutes.HOME: (_) => HomePage(),
-            AppRoutes.PARKING_LOT: (_) => ParkingLotPage(),
-          }),
+        theme: AppThemeData.themeData,
+        title: _title,
+        routes: {
+          AppRoutes.HOME: (_) => HomePage(),
+          AppRoutes.ENTRY_DETAIL: (_) => EntryDetailPage(),
+        },
+      ),
     );
   }
 }
