@@ -9,7 +9,7 @@ class ParkingProvider with ChangeNotifier {
       "https://flutter-parking-challenge-default-rtdb.firebaseio.com/";
 
   static String _model = 'model';
-  static String _plate = 'model';
+  static String _plate = 'plate';
   static String _entryDate = 'entryDate';
   static String _departureDate = 'departureDate';
   static String _lotCode = '_lotCode';
@@ -64,7 +64,7 @@ class ParkingProvider with ChangeNotifier {
             _plate: parkingModel.plate,
             _lotCode: parkingModel.lotCode,
             _entryDate: parkingModel.entryDate,
-            _departureDate: parkingModel.entryDate,
+            _departureDate: parkingModel.departureDate,
           }),
         );
 
@@ -78,7 +78,7 @@ class ParkingProvider with ChangeNotifier {
           _plate: parkingModel.plate,
           _lotCode: parkingModel.lotCode,
           _entryDate: parkingModel.entryDate,
-          _departureDate: parkingModel.entryDate,
+          _departureDate: parkingModel.departureDate,
         }),
       );
 

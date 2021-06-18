@@ -13,7 +13,8 @@ class EntryDetailPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as ParkingLotModel;
     return Scaffold(
         appBar: AppBar(
-          title: Text('${parkingModel.model}'),
+          title: Text(
+              '[${parkingModel.lotCode}] ${parkingModel.model} - ${parkingModel.plate} '),
           centerTitle: true,
         ),
         body: Padding(
@@ -22,76 +23,88 @@ class EntryDetailPage extends StatelessWidget {
             children: [
               Column(
                 children: [
+                  SizedBox(height: 16),
+                  Text('Entrada: ${parkingModel.entryDate}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  SizedBox(height: 16),
                   EntryDetailFormWidget(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 4.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Provider.of<ParkingProvider>(context, listen: false)
-                            .remove(parkingModel.id);
-                        Navigator.of(context).pop(false);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.grey[900],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          textStyle: TextStyle(fontSize: 20)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.delete, color: Colors.white),
-                          SizedBox(
-                            width: 16.0,
-                          ),
-                          Text(
-                            'Excluir Entrada',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton.icon(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.green,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            label: Text(
+                              'Efetuar Saída',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.logout,
                               color: Colors.white,
+                              size: 32,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 4.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Provider.of<ParkingProvider>(context, listen: false)
-                            .remove(parkingModel.id);
-                        Navigator.of(context).pop(false);
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.grey[900],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          textStyle: TextStyle(fontSize: 20)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.delete, color: Colors.white),
-                          SizedBox(
-                            width: 16.0,
-                          ),
-                          Text(
-                            'Realizar Saida',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              Provider.of<ParkingProvider>(context,
+                                      listen: false)
+                                  .remove(parkingModel.id);
+                              Navigator.of(context).pop(false);
+                            },
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            label: Text(
+                              'Excluir Entrada',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.delete,
                               color: Colors.white,
+                              size: 32,
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),

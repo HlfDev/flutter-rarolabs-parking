@@ -8,6 +8,9 @@ class LotProvider with ChangeNotifier {
   static const _baseUrl =
       "https://flutter-parking-challenge-default-rtdb.firebaseio.com/";
 
+  static String _emptySpace = 'emptySpace';
+  static String _lotCode = 'lotCode';
+
   List<LotModel> _items = [];
 
   Future<void> fetch() async {
@@ -19,15 +22,14 @@ class LotProvider with ChangeNotifier {
     if (verifyNullResponse == null) {
       return;
     }
-    
+
     Map<String, dynamic> data = jsonDecode(response.body);
 
     data.forEach((id, data) {
       _items.add(LotModel(
         id: id,
-        emptySpace: data['emptySpace'],
-        lotCode: data['lotCode'], 
-
+        emptySpace: data[_emptySpace],
+        lotCode: data[_lotCode],
       ));
     });
     notifyListeners();
@@ -53,8 +55,8 @@ class LotProvider with ChangeNotifier {
         await http.patch(
           Uri.parse("$_baseUrl/lots/${lotModel.id}.json"),
           body: json.encode({
-            "lotCode": lotModel.lotCode,
-            "emptySpace": lotModel.emptySpace,
+            _lotCode: lotModel.lotCode,
+            _emptySpace: lotModel.emptySpace,
           }),
         );
 
@@ -64,14 +66,15 @@ class LotProvider with ChangeNotifier {
       final response = await http.post(
         Uri.parse("$_baseUrl/lots.json"),
         body: json.encode({
-          "lotCode": lotModel.lotCode,
-          "emptySpace": lotModel.emptySpace,
+          _lotCode: lotModel.lotCode,
+          _emptySpace: lotModel.emptySpace,
         }),
       );
 
       _items.add(LotModel(
         id: json.decode(response.body)['name'],
-        lotCode: lotModel.lotCode, emptySpace: lotModel.emptySpace,
+        lotCode: lotModel.lotCode,
+        emptySpace: lotModel.emptySpace,
       ));
     }
 

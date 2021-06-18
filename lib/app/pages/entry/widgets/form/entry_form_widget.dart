@@ -11,7 +11,6 @@ class EntryFormWidget extends StatefulWidget {
 }
 
 class _EntryFormWidgetState extends State<EntryFormWidget> {
-
   static String _id = 'id';
   static String _model = 'model';
   static String _plate = 'plate';
@@ -25,7 +24,6 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
 
   static String _emptyText = '';
 
-
   final Map<String, dynamic> _formData = {};
   final _formKey = GlobalKey<FormState>();
 
@@ -33,7 +31,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
   final _controllerPlate = TextEditingController();
   final _controllerLotCode = TextEditingController();
   final _controllerValuePerHour = TextEditingController();
-  
+
   void _loadFormData(ParkingLotModel parkingModel) {
     _formData[_id] = parkingModel.id;
     _formData[_model] = parkingModel.model;
@@ -186,7 +184,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                             fontWeight: FontWeight.bold,
                           )),
                       label: Text(
-                        'Realizar Entrada',
+                        'Efetuar Entrada',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
