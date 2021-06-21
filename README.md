@@ -24,7 +24,7 @@ João é um administrador mais velho, então uma interface fácil de utilizar é
 <div align="left">
   <ul>
   <li>Packages - Formatador de data com intl.</li>
-  <li>Packages - Gerenciador de Dependencias com o Provider.</li>
+  <li>Packages - Gerencia de Estado com o Provider.</li>
   <li>Backend  - Consumo de API com o Realtime Database do Firebase.</li>
   </ul>
 </div>
