@@ -23,14 +23,15 @@ João é um administrador mais velho, então uma interface fácil de utilizar é
 <h3 align="left" > Recursos Utilizados </h3>
 <div align="left">
   <ul>
-  <li>Provider - Gerenciador de Dependencias.</li>
-  <li>Firebase - Backend(API) com o Realtime Database.</li>
+  <li>Packages - Formatador de data com intl.</li>
+  <li>Packages - Gerenciador de Dependencias com o Provider.</li>
+  <li>Backend  - Consumo de API com o Realtime Database do Firebase.</li>
   </ul>
 </div>
 <h3 align="left" > Proximas Atualizações </h3>
 <div align="left">
   <ul>
-  <li>Refatorar o Código.</li>
+  <li>Refatorar o código.</li>
   <li>Adicionar filtro de data das movimentações.</li>
   <li>Agrupar o historíco das movimentações pelo dia.</li>
   <li>Criar opção de valor por hora, para calcular o valor baseado no tempo de permanencia na vaga.</li>
