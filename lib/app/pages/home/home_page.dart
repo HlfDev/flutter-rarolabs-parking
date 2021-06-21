@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raro_parking_challenge/app/controller/lot_controller.dart';
+import 'package:raro_parking_challenge/app/controller/parking_controller.dart';
+import 'package:raro_parking_challenge/app/controller/parking_history_controller.dart';
+import 'package:raro_parking_challenge/app/pages/departure/departure_page.dart';
 import 'package:raro_parking_challenge/app/pages/entry/entry_page.dart';
 
 import 'package:raro_parking_challenge/app/pages/lot/lot_page.dart';
-import 'package:raro_parking_challenge/app/provider/lot_provider.dart';
-import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 
 class HomePage extends StatefulWidget {
   static String _title = 'Controle Estacionamento';
@@ -18,7 +20,7 @@ class HomePage extends StatefulWidget {
   static List<Widget> _pages = [
     LotPage(),
     EntryPage(),
-    Container(),
+    DeparturePage(),
   ];
 
   @override
@@ -29,10 +31,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    
-    Provider.of<ParkingProvider>(context, listen: false).fetch();
-    Provider.of<LotProvider>(context, listen: false).fetch();
 
+    Provider.of<ParkingController>(context, listen: false).fetch();
+    Provider.of<ParkingHistoryController>(context, listen: false).fetch();
+    Provider.of<LotController>(context, listen: false).fetch();
   }
 
   @override

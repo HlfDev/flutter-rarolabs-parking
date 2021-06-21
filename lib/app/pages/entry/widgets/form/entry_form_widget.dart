@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raro_parking_challenge/app/controller/lot_controller.dart';
+import 'package:raro_parking_challenge/app/controller/parking_controller.dart';
 import 'package:raro_parking_challenge/app/models/parking_model.dart';
-import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 
 class EntryFormWidget extends StatefulWidget {
   const EntryFormWidget({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
 
   static String _validatorModel = 'Preencha o Modelo';
   static String _validatorPlate = 'Preencha a Placa';
-  static String _validatorLotCode = 'Selecione uma Vaga';
 
   static String _emptyText = '';
 
@@ -32,7 +32,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
   final _controllerLotCode = TextEditingController();
   final _controllerValuePerHour = TextEditingController();
 
-  void _loadFormData(ParkingLotModel parkingModel) {
+  void _loadFormData(ParkingModel parkingModel) {
     _formData[_id] = parkingModel.id;
     _formData[_model] = parkingModel.model;
     _formData[_plate] = parkingModel.plate;
@@ -41,15 +41,22 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
     _formData[_departureDate] = parkingModel.departureDate;
   }
 
+  var dropdownValue;
+
   @override
   Widget build(BuildContext context) {
-    final ParkingLotModel parkingModel = ParkingLotModel(
+    final ParkingModel parkingModel = ParkingModel(
       departureDate: _emptyText,
       entryDate: _emptyText,
       id: _emptyText,
       lotCode: _emptyText,
       model: _emptyText,
       plate: _emptyText,
+    );
+
+    final LotController _lotList = Provider.of(
+      context,
+      listen: true,
     );
 
     _loadFormData(parkingModel);
@@ -76,7 +83,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                         return null;
                       },
                       onSaved: (value) => _formData['model'] = value ?? '',
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       cursorColor: Colors.black,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.local_shipping),
@@ -90,35 +97,6 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                       ),
                     ),
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _controllerLotCode,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return _validatorLotCode;
-                        }
-                        return null;
-                      },
-                      onSaved: (value) => _formData['lotCode'] = value ?? '',
-                      keyboardType: TextInputType.number,
-                      cursorColor: Colors.black,
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.tag),
-                        labelText: 'Código da Vaga',
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8.0),
                   Expanded(
                     child: TextFormField(
                       controller: _controllerPlate,
@@ -129,7 +107,7 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                         return null;
                       },
                       onSaved: (value) => _formData['plate'] = value ?? '',
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       cursorColor: Colors.black,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.subtitles),
@@ -145,6 +123,57 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                   ),
                 ],
               ),
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 25),
+                    child: Icon(Icons.tag, color: Colors.grey),
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: 20,
+                        left: 20,
+                      ),
+                      child: DropdownButton<String>(
+                        value: dropdownValue,
+                        hint: Text(
+                          "Selecione a Vaga",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        isExpanded: true,
+                        icon: Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        style: TextStyle(color: Colors.grey),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.grey,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue!;
+                          });
+                        },
+                        items: _lotList.items
+                            .where((e) => e.emptySpace == true)
+                            .map((e) => e.lotCode)
+                            .toList()
+                            .map((value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 20.0,
               ),
@@ -155,13 +184,20 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                       onPressed: () {
                         _formKey.currentState!.save();
                         if (_formKey.currentState!.validate()) {
-                          Provider.of<ParkingProvider>(context, listen: false)
+                          if (dropdownValue == null) {
+                            showAlertDialog(context);
+                            return;
+                          }
+                          Provider.of<LotController>(context, listen: false)
+                              .updateStatus(dropdownValue, false);
+
+                          Provider.of<ParkingController>(context, listen: false)
                               .put(
-                            ParkingLotModel(
+                            ParkingModel(
                               id: _formData[_id] ?? _emptyText,
                               departureDate: _emptyText,
                               entryDate: '${DateTime.now()}',
-                              lotCode: _formData[_lotCode] ?? _emptyText,
+                              lotCode: dropdownValue ?? _emptyText,
                               model: _formData[_model] ?? _emptyText,
                               plate: _formData[_plate] ?? _emptyText,
                             ),
@@ -171,6 +207,8 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
                           _controllerPlate.text = _emptyText;
                           _controllerLotCode.text = _emptyText;
                           _controllerValuePerHour.text = _emptyText;
+
+                          dropdownValue = null;
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -205,4 +243,31 @@ class _EntryFormWidgetState extends State<EntryFormWidget> {
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Alerta"),
+    content: Text("Selecione uma Vaga para Efetuar a Entrada"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

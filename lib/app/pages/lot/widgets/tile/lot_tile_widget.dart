@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raro_parking_challenge/app/controller/lot_controller.dart';
+import 'package:raro_parking_challenge/app/core/core.dart';
 import 'package:raro_parking_challenge/app/models/lot_model.dart';
-import 'package:raro_parking_challenge/app/provider/lot_provider.dart';
 
 class LotTileWidget extends StatelessWidget {
+  const LotTileWidget({required this.lotModel});
+
   final LotModel lotModel;
 
-  const LotTileWidget({Key? key, required this.lotModel}) : super(key: key);
+  static String _textEmpty = '';
+  static String _textInUse = 'Em uso';
+  static String _textAvaible = 'Disponivel';
+  static String _textRemove = 'Remover Vaga';
 
   @override
   Widget build(BuildContext context) {
-    String emUso = !lotModel.emptySpace ? 'Em uso' : 'Disponivel';
+    String _inUse = !lotModel.emptySpace ? _textInUse : _textAvaible;
+    Icon _iconDeleted = Icon(Icons.delete, color: Colors.white);
+
     return Row(
       children: [
         Expanded(
@@ -21,36 +29,63 @@ class LotTileWidget extends StatelessWidget {
           color: !lotModel.emptySpace ? Colors.grey[800] : Colors.green,
           child: ListTile(
             title: Text(
-              '[${lotModel.lotCode}] $emUso',
+              '[${lotModel.lotCode}] $_inUse',
               textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-              ),
+              style: AppTextStyles.text18White,
             ),
             trailing: lotModel.emptySpace
                 ? TextButton.icon(
                     onPressed: () {
-                      Provider.of<LotProvider>(context, listen: false)
-                          .remove(lotModel.id);
+                      showAlertDialog(context, lotModel);
                     },
-                    icon: Icon(Icons.delete, color: Colors.white),
+                    icon: _iconDeleted,
                     label: Text(
-                      'Remover Vaga',
+                      _textRemove,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
+                      style: AppTextStyles.text18White,
                     ),
                   )
-                : Text(''),
+                : Text(_textEmpty),
           ),
         )),
       ],
     );
   }
+}
 
+showAlertDialog(BuildContext context, LotModel lotModel) {
+  String _textYes = 'Sim';
+  String _textNo = 'Não';
+  String _textTitle = 'Remover Vaga';
+  String _textContent = 'Deseja mesmo remover a Vaga: ${lotModel.lotCode}?';
+  var _provider = Provider.of<LotController>(context, listen: false);
 
-  
+  Widget cancelButton = TextButton(
+    child: Text(_textNo, style: AppTextStyles.text18),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text(_textYes, style: AppTextStyles.text18),
+    onPressed: () {
+      _provider.remove(lotModel.id);
+      Navigator.pop(context);
+    },
+  );
+  AlertDialog alert = AlertDialog(
+    title: Text(_textTitle),
+    content: Text(_textContent),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raro_parking_challenge/app/controller/parking_controller.dart';
 import 'package:raro_parking_challenge/app/pages/entry/widgets/form/entry_form_widget.dart';
 import 'package:raro_parking_challenge/app/pages/entry/widgets/tile/entry_tile_widget.dart';
-import 'package:raro_parking_challenge/app/provider/parking_provider.dart';
 
 class EntryPage extends StatelessWidget {
   const EntryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final ParkingProvider parkingList = Provider.of(
+    final ParkingController parkingList = Provider.of(
       context,
       listen: true,
     );

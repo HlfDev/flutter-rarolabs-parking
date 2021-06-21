@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:raro_parking_challenge/app/models/lot_model.dart';
 
-class LotProvider with ChangeNotifier {
+class LotController with ChangeNotifier {
   static const _baseUrl =
       "https://flutter-parking-challenge-default-rtdb.firebaseio.com/";
 
@@ -12,6 +12,22 @@ class LotProvider with ChangeNotifier {
   static String _lotCode = 'lotCode';
 
   List<LotModel> _items = [];
+
+  List<bool> _toggleLotSelected = [true, false];
+
+  bool _showAvailableLots = true;
+
+  List<bool> get toggleLotSelected => _toggleLotSelected;
+
+  set isSelected(List<bool> value) {
+    _toggleLotSelected = value;
+  }
+
+  bool get showAvailableLots => _showAvailableLots;
+  set showAvailableLots(bool value) {
+    _showAvailableLots = value;
+    notifyListeners();
+  }
 
   Future<void> fetch() async {
     final response = await http.get(
@@ -32,20 +48,18 @@ class LotProvider with ChangeNotifier {
         lotCode: data[_lotCode],
       ));
     });
+
     notifyListeners();
+
     return Future.value();
   }
 
   List<LotModel> get items {
-    return [..._items];
-  }
-
-  int get count {
-    return _items.length;
-  }
-
-  LotModel byIndex(int index) {
-    return _items.elementAt(index);
+    if (showAvailableLots == true) {
+      return [..._items].where((e) => e.emptySpace == true).toList();
+    } else {
+      return [..._items].where((e) => e.emptySpace == false).toList();
+    }
   }
 
   Future<void> put(LotModel lotModel) async {
@@ -77,6 +91,28 @@ class LotProvider with ChangeNotifier {
         emptySpace: lotModel.emptySpace,
       ));
     }
+
+    notifyListeners();
+  }
+
+  void updateStatus(String lotCode, bool status) async {
+    final index = _items.indexWhere((lot) => lot.lotCode == lotCode);
+
+    final LotModel lotModel = _items[index];
+
+    await http.patch(
+      Uri.parse("$_baseUrl/lots/${lotModel.id}.json"),
+      body: json.encode({
+        _lotCode: lotModel.lotCode,
+        _emptySpace: status,
+      }),
+    );
+
+    _items[index] = LotModel(
+      id: lotModel.id,
+      emptySpace: status,
+      lotCode: lotModel.lotCode,
+    );
 
     notifyListeners();
   }

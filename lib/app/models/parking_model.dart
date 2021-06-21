@@ -1,14 +1,12 @@
 import 'dart:convert';
 
-class ParkingLotModel {
-
+class ParkingModel {
   static String _id = 'id';
   static String _model = 'model';
   static String _plate = 'plate';
   static String _lotCode = 'lotCode';
   static String _entryDate = 'entryDate';
   static String _departureDate = 'departureDate';
-
 
   final String id;
   final String model;
@@ -17,7 +15,7 @@ class ParkingLotModel {
   final String entryDate;
   final String departureDate;
 
-  const ParkingLotModel({
+  const ParkingModel({
     required this.id,
     required this.model,
     required this.plate,
@@ -28,7 +26,7 @@ class ParkingLotModel {
 
   Map<String, dynamic> toMap() {
     return {
-      _id : id,
+      _id: id,
       _model: model,
       _plate: plate,
       _lotCode: lotCode,
@@ -37,8 +35,8 @@ class ParkingLotModel {
     };
   }
 
-  factory ParkingLotModel.fromMap(Map<String, dynamic> map) {
-    return ParkingLotModel(
+  factory ParkingModel.fromMap(Map<String, dynamic> map) {
+    return ParkingModel(
       id: map[_id],
       model: map[_model],
       plate: map[_plate],
@@ -48,9 +46,8 @@ class ParkingLotModel {
     );
   }
 
-
   String toJson() => json.encode(toMap());
 
-  factory ParkingLotModel.fromJson(String source) =>
-      ParkingLotModel.fromMap(json.decode(source));
+  factory ParkingModel.fromJson(String source) =>
+      ParkingModel.fromMap(json.decode(source));
 }

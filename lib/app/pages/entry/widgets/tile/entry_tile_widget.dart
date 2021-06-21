@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:raro_parking_challenge/app/core/app_routes.dart';
+import 'package:raro_parking_challenge/app/core/app_text_styles.dart';
 import 'package:raro_parking_challenge/app/models/parking_model.dart';
 
 class EntryTileWidget extends StatelessWidget {
-  final ParkingLotModel parkingModel;
+  final ParkingModel parkingModel;
 
   const EntryTileWidget({Key? key, required this.parkingModel})
       : super(key: key);
@@ -27,8 +28,12 @@ class EntryTileWidget extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              trailing: IconButton(
-                icon: Icon(Icons.forward_sharp, color: Colors.orange, size: 32),
+              trailing: TextButton.icon(
+                icon: Icon(Icons.login, color: Colors.orange, size: 24),
+                label: Text(
+                  'ACESSAR',
+                  style: AppTextStyles.text18,
+                ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(AppRoutes.ENTRY_DETAIL,
                       arguments: parkingModel);

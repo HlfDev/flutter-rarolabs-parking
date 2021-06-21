@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raro_parking_challenge/app/controller/lot_controller.dart';
 import 'package:raro_parking_challenge/app/models/lot_model.dart';
-import 'package:raro_parking_challenge/app/provider/lot_provider.dart';
 
 class LotFormWidget extends StatefulWidget {
   const LotFormWidget({Key? key}) : super(key: key);
@@ -58,6 +58,7 @@ class _LotFormWidgetState extends State<LotFormWidget> {
                       },
                       onSaved: (value) => _formData['lotCode'] = value ?? '',
                       keyboardType: TextInputType.number,
+                      maxLength: 10,
                       cursorColor: Colors.black,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.tag),
@@ -83,7 +84,8 @@ class _LotFormWidgetState extends State<LotFormWidget> {
                       onPressed: () {
                         _formKey.currentState!.save();
                         if (_formKey.currentState!.validate()) {
-                          Provider.of<LotProvider>(context, listen: false).put(
+                          Provider.of<LotController>(context, listen: false)
+                              .put(
                             LotModel(
                               id: _formData['id'] ?? '',
                               lotCode: _formData['lotCode'] ?? '',

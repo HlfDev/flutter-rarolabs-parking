@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:raro_parking_challenge/app/models/parking_model.dart';
 
-class ParkingProvider with ChangeNotifier {
+class ParkingController with ChangeNotifier {
   static const _baseUrl =
       "https://flutter-parking-challenge-default-rtdb.firebaseio.com/";
 
@@ -12,9 +12,9 @@ class ParkingProvider with ChangeNotifier {
   static String _plate = 'plate';
   static String _entryDate = 'entryDate';
   static String _departureDate = 'departureDate';
-  static String _lotCode = '_lotCode';
+  static String _lotCode = 'lotCode';
 
-  List<ParkingLotModel> _items = [];
+  List<ParkingModel> _items = [];
 
   Future<void> fetch() async {
     final response = await http.get(
@@ -28,7 +28,7 @@ class ParkingProvider with ChangeNotifier {
     Map<String, dynamic> data = jsonDecode(response.body);
 
     data.forEach((id, data) {
-      _items.add(ParkingLotModel(
+      _items.add(ParkingModel(
         id: id,
         departureDate: data[_departureDate],
         entryDate: data[_entryDate],
@@ -41,7 +41,7 @@ class ParkingProvider with ChangeNotifier {
     return Future.value();
   }
 
-  List<ParkingLotModel> get items {
+  List<ParkingModel> get items {
     return [..._items];
   }
 
@@ -49,11 +49,11 @@ class ParkingProvider with ChangeNotifier {
     return _items.length;
   }
 
-  ParkingLotModel byIndex(int index) {
+  ParkingModel byIndex(int index) {
     return _items.elementAt(index);
   }
 
-  Future<void> put(ParkingLotModel parkingModel) async {
+  Future<void> put(ParkingModel parkingModel) async {
     if (parkingModel.id.trim().isNotEmpty) {
       final index = _items.indexWhere((park) => park.id == parkingModel.id);
       if (index >= 0) {
@@ -82,7 +82,7 @@ class ParkingProvider with ChangeNotifier {
         }),
       );
 
-      _items.add(ParkingLotModel(
+      _items.add(ParkingModel(
         id: json.decode(response.body)['name'],
         model: parkingModel.model,
         plate: parkingModel.plate,
